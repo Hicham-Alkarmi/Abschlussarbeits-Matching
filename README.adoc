@@ -1,16 +1,6 @@
-= Thesis is coming!
+# Abschlussarbeits-Matching
 
-Anforderungen finden Sie in der https://propra.d.stups.hhu.de/ws25/627b529bc074bf7/index.html[Projektbeschreibung] 
-Lesen Sie auf jeden Fall die Hinweise im https://propra.d.stups.hhu.de/ws25/81409548708bb5d/index.html[Organisationsdokument]. 
+Abschlussarbeits-Matching ist eine Webanwendung, die Studierenden hilft, passende Betreuer:innen und Themen für ihre Abschlussarbeit zu finden. Die Plattform bietet Profilseiten mit Themen, Tags, Dateien und Links sowie ein Matching-System basierend auf Interessen und besuchten Kursen.
 
-Fristen für die Selbstbewertung in Ilias:
-
-* erste Klausur: 16.02.2026
-* zweite Klausur: 17.03.2026
-
-Jedes Teammitglied muss die Selbstbewertung einzeln ausfüllen. 
-Wenn Sie den Fragebogen zum ersten Termin ausgefüllt haben, die erste Klausur aber nicht mitgeschrieben haben, müssen Sie den Fragebogen für den zweiten Versuch neu ausfüllen. 
-
-Dokumentieren Sie die Verwendung von KI-Werkzeugen in der Datei ki.txt
-
-Wir behalten uns vor, die Implementierung und Ihre Beantwortung des Fragebogens stichpunktartig zu prüfen.
+Backend und REST APIs wurden in Java mit Spring Boot umgesetzt, Deployment erfolgt über Docker.
+Die Authentifizierung erfolgt über GitHub OAuth, drei Rollen sind vorgesehen: Admin, Betreuende und Studierende.
