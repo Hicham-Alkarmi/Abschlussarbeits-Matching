@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Datei hochladen</title>
+</head>
+<body>
+<main>
+    <h1>Datei hochladen</h1>
+
+    <p th:if="${fehler}" th:text="${fehler}" role="alert"></p>
+
+    <!-- Upload zu Betreuer -->
+    <form th:if="${themaId == null}"
+          th:action="@{/betreuer/datei-hochladen}"
+          method="post"
+          enctype="multipart/form-data"
+          th:object="${form}">
+
+        <label for="titel">Titel *</label>
+        <input id="titel" type="text" th:field="*{titel}"
+               aria-required="true">
+        <span th:if="${#fields.hasErrors('titel')}"
+              th:errors="*{titel}" role="alert"></span>
+        <br>
+
+        <label for="beschreibung">Beschreibung</label>
+        <input id="beschreibung" type="text"
+               th:field="*{beschreibung}">
+        <br>
+
+        <label for="datei">Datei (.pdf, .zip, .md) *</label>
+        <input id="datei" type="file" name="datei"
+               accept=".pdf,.zip,.md" aria-required="true">
+        <br>
+
+        <button type="submit">Hochladen</button>
+    </form>
+
+    <!-- Upload zu Thema -->
+    <form th:if="${themaId != null}"
+          th:action="@{'/betreuer/thema/' + ${themaId} + '/datei-hochladen'}"
+          method="post"
+          enctype="multipart/form-data"
+          th:object="${form}">
+
+        <label for="titelThema">Titel *</label>
+        <input id="titelThema" type="text" th:field="*{titel}"
+               aria-required="true">
+        <span th:if="${#fields.hasErrors('titel')}"
+              th:errors="*{titel}" role="alert"></span>
+        <br>
+
+        <label for="beschreibungThema">Beschreibung</label>
+        <input id="beschreibungThema" type="text"
+               th:field="*{beschreibung}">
+        <br>
+
+        <label for="dateiThema">Datei (.pdf, .zip, .md) *</label>
+        <input id="dateiThema" type="file" name="datei"
+               accept=".pdf,.zip,.md" aria-required="true">
+        <br>
+
+        <button type="submit">Hochladen</button>
+    </form>
+
+    <a th:href="@{/betreuer/alle-themen}">Zurück</a>
+</main>
+</body>
+</html>

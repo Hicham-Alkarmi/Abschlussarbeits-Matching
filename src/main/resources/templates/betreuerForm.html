@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Betreuer anlegen</title>
+</head>
+<body>
+
+<main>
+  <h1>Neuen Betreuer anlegen</h1>
+
+  <!-- Fehlermeldung anzeigen -->
+  <p th:if="${fehler}" th:text="${fehler}"></p>
+
+  <form th:action="@{/admin/betreuer-anlegen}"
+        method="post"
+        th:object="${betreuerDto}">
+
+    <label>GitHub ID</label>
+    <input type="text" th:field="*{githubId}">
+    <span th:if="${#fields.hasErrors('githubId')}"
+          th:errors="*{githubId}"></span>
+
+    <br>
+
+    <label>Vorname</label>
+    <input type="text" th:field="*{vorname}">
+    <span th:if="${#fields.hasErrors('vorname')}"
+          th:errors="*{vorname}"></span>
+
+    <br>
+
+    <label>Nachname</label>
+    <input type="text" th:field="*{nachname}">
+    <span th:if="${#fields.hasErrors('nachname')}"
+          th:errors="*{nachname}"></span>
+
+    <br>
+
+    <label>Email</label>
+    <input type="email" th:field="*{email}">
+    <span th:if="${#fields.hasErrors('email')}"
+          th:errors="*{email}"></span>
+
+    <br>
+
+    <label>Raumnummer</label>
+    <input type="text" th:field="*{raumNr}">
+    <span th:if="${#fields.hasErrors('raumNr')}"
+          th:errors="*{raumNr}"></span>
+
+    <br>
+
+    <button type="submit">Anlegen</button>
+
+  </form>
+
+  <!-- Zurück Button -->
+  <a th:href="@{/admin/alle-betreuer}">Zurück</a>
+
+</main>
+
+</body>
+</html>

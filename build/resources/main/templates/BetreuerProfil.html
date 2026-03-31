@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profil bearbeiten</title>
+</head>
+<body>
+<main>
+    <h1>Mein Profil bearbeiten</h1>
+
+    <p th:if="${fehler}" th:text="${fehler}" role="alert"></p>
+
+    <form th:action="@{/betreuer/edit-profile}"
+          method="post"
+          th:object="${editDto}">
+
+        <label for="vorname">Vorname *</label>
+        <input id="vorname" type="text"
+               th:field="*{vorname}"
+               aria-required="true">
+        <span th:if="${#fields.hasErrors('vorname')}"
+              th:errors="*{vorname}" role="alert"></span>
+        <br>
+
+        <label for="nachname">Nachname *</label>
+        <input id="nachname" type="text"
+               th:field="*{nachname}"
+               aria-required="true">
+        <span th:if="${#fields.hasErrors('nachname')}"
+              th:errors="*{nachname}" role="alert"></span>
+        <br>
+
+        <label for="email">Email *</label>
+        <input id="email" type="email"
+               th:field="*{email}"
+               aria-required="true">
+        <span th:if="${#fields.hasErrors('email')}"
+              th:errors="*{email}" role="alert"></span>
+        <br>
+
+        <label for="raumNr">Raumnummer *</label>
+        <input id="raumNr" type="text"
+               th:field="*{raumNr}"
+               aria-required="true">
+        <span th:if="${#fields.hasErrors('raumNr')}"
+              th:errors="*{raumNr}" role="alert"></span>
+        <br>
+
+        <label for="fachgebiete">
+            Fachgebiete (kommagetrennt: mathe, informatik)
+        </label>
+        <input id="fachgebiete" type="text"
+               th:field="*{fachgebiete}">
+        <br>
+
+        <label for="url">
+            Link URLs (kommagetrennt: https://github.com, https://hhu.de)
+        </label>
+        <input id="url" type="text"
+               th:field="*{url}">
+        <br>
+
+        <label for="urlText">
+            Link Texte (kommagetrennt: GitHub, HHU)
+        </label>
+        <input id="urlText" type="text"
+               th:field="*{urlText}">
+        <br>
+
+        <button type="submit">Speichern</button>
+    </form>
+
+    <nav>
+        <a th:href="@{/betreuer/alle-themen}">Meine Themen</a>
+        <a th:href="@{/}">Startseite</a>
+    </nav>
+</main>
+</body>
+</html>

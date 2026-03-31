@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alle Themen</title>
+  <style>
+    body { font-family: sans-serif; max-width: 900px;
+      margin: 2rem auto; padding: 0 1rem; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { border: 1px solid #ccc; padding: 0.5rem;
+      text-align: left; }
+    th { background: #f0f0f0; }
+    .tag { background: #e0e0e0; padding: 0.1rem 0.4rem;
+      border-radius: 3px; margin-right: 0.2rem;
+      font-size: 0.85rem; }
+    nav a { margin-right: 1rem; }
+  </style>
+</head>
+<body>
+<main>
+  <h1>Alle Themen</h1>
+
+  <p th:if="${message}" th:text="${message}"></p>
+
+  <table th:if="${not #lists.isEmpty(themen)}">
+    <caption>Übersicht aller Themen</caption>
+    <thead>
+    <tr>
+      <th scope="col">Titel</th>
+      <th scope="col">Fachgebiete</th>
+      <th scope="col">Betreuer</th>
+      <th scope="col">Details</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="t : ${themen}">
+      <td th:text="${t.titel}"></td>
+      <td>
+                <span th:each="f : ${t.fachgebiete}"
+                      class="tag"
+                      th:text="${f.fachgebiet}">
+                </span>
+      </td>
+      <td>
+        <th:block th:each="b : ${betreuer}"
+                  th:if="${b.githubId == t.betreuerId}">
+          <a th:href="@{'/betreuer-profil/'
+                            + ${b.githubId}}">
+            <span th:text="${b.name.vorname}"></span>
+            <span th:text="${b.name.nachname}"></span>
+          </a>
+        </th:block>
+      </td>
+      <td>
+        <a th:href="@{'/thema/' + ${t.id}}">
+          Details ansehen
+        </a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <nav>
+    <a th:href="@{/matching}">Matching starten</a>
+    <a th:href="@{/alle-betreuer}">Alle Betreuer</a>
+    <a th:href="@{/}">Startseite</a>
+  </nav>
+</main>
+</body>
+</html>

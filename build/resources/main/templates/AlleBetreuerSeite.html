@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alle Betreuer</title>
+</head>
+<body>
+<main>
+    <h1>Alle Betreuer</h1>
+
+    <p th:if="${message}" th:text="${message}"></p>
+
+    <ul th:if="${not #lists.isEmpty(betreuer)}">
+        <li th:each="b : ${betreuer}">
+            <a th:href="@{'/betreuer-profil/' + ${b.githubId}}">
+                <span th:text="${b.name.vorname}"></span>
+                <span th:text="${b.name.nachname}"></span>
+            </a>
+            <span> – </span>
+            <span th:text="${b.kontaktinfo.raum.raumNr}"></span>
+            <br>
+            <!-- Fachgebiete als Tags: -->
+            <span th:each="f : ${b.fachgebiete}">
+                [<span th:text="${f.fachgebiet}"></span>]
+            </span>
+        </li>
+    </ul>
+
+    <nav>
+        <a th:href="@{/matching}">Matching starten</a>
+        <a th:href="@{/}">Startseite</a>
+    </nav>
+</main>
+</body>
+</html>

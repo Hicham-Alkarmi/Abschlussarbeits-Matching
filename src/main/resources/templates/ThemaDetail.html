@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thema Details</title>
+</head>
+<body>
+<main>
+    <h1>Thema Details</h1>
+
+    <p th:if="${fehler}" th:text="${fehler}" role="alert"></p>
+
+    <article th:if="${thema != null}">
+
+        <h2 th:text="${thema.titel}"></h2>
+
+        <section>
+            <h3>Beschreibung</h3>
+            <p th:text="${not #strings.isEmpty(thema.beschreibung)
+                ? thema.beschreibung : 'Keine Beschreibung'}">
+            </p>
+        </section>
+
+        <section>
+            <h3>Fachgebiete</h3>
+            <ul th:if="${not thema.fachgebiete.isEmpty()}">
+                <li th:each="f : ${thema.fachgebiete}"
+                    th:text="${f.fachgebiet}">
+                </li>
+            </ul>
+            <p th:if="${thema.fachgebiete.isEmpty()}">
+                Keine Fachgebiete angegeben.
+            </p>
+        </section>
+
+        <section>
+            <h3>Empfohlene Veranstaltungen</h3>
+            <ul th:if="${not thema.empfohleneVeranstaltungen
+                          .isEmpty()}">
+                <li th:each="v : ${thema.empfohleneVeranstaltungen}"
+                    th:text="${v.veranstaltung}">
+                </li>
+            </ul>
+            <p th:if="${thema.empfohleneVeranstaltungen.isEmpty()}">
+                Keine Veranstaltungen angegeben.
+            </p>
+        </section>
+
+        <section>
+            <h3>Links</h3>
+            <ul th:if="${not thema.links.isEmpty()}">
+                <li th:each="l : ${thema.links}">
+                    <a th:href="${l.url}"
+                       th:text="${l.anzeigenderText}"
+                       target="_blank"
+                       rel="noopener noreferrer">
+                    </a>
+                </li>
+            </ul>
+            <p th:if="${thema.links.isEmpty()}">
+                Keine Links angegeben.
+            </p>
+        </section>
+
+        <section>
+            <h3>Dateien</h3>
+            <ul th:if="${not #lists.isEmpty(dateien)}">
+                <li th:each="d : ${dateien}">
+                    <a th:if="${#strings.endsWith(
+                                d.dateiSystemName, '.md')}"
+                       th:href="@{'/datei/anzeigen/'
+                               + ${d.dateiSystemName}}"
+                       th:text="${d.originalName}">
+                    </a>
+                    <a th:if="${not #strings.endsWith(
+                                d.dateiSystemName, '.md')}"
+                       th:href="@{'/datei/download/'
+                               + ${d.dateiSystemName}}"
+                       th:text="${d.originalName}">
+                    </a>
+                </li>
+            </ul>
+            <p th:if="${#lists.isEmpty(dateien)}">
+                Keine Dateien vorhanden.
+            </p>
+        </section>
+
+    </article>
+
+    <nav>
+        <a th:href="@{/alle-themen}">Alle Themen</a>
+        <a th:href="@{/matching}">Matching</a>
+        <a th:href="@{/}">Startseite</a>
+    </nav>
+</main>
+</body>
+</html>

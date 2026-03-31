@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matching</title>
+</head>
+<body>
+<main>
+    <h1>Thema und Betreuer finden</h1>
+
+    <p th:if="${fehler}" th:text="${fehler}" role="alert"></p>
+
+    <form th:action="@{/matching}" method="post">
+
+        <fieldset>
+            <legend>Fachgebiete auswählen</legend>
+            <div th:if="${alleFachgebiete != null
+                          and not #sets.isEmpty(alleFachgebiete)}">
+                <p>Wähle Fachgebiete aus:</p>
+                <div th:each="f : ${alleFachgebiete}">
+                    <label>
+                        <input type="checkbox"
+                               name="fachgebieteInput"
+                               th:value="${f}">
+                        <span th:text="${f}"></span>
+                    </label>
+                </div>
+            </div>
+        </fieldset>
+
+        <br>
+
+        <fieldset>
+            <legend>Veranstaltungen</legend>
+            <label for="veranstaltungenInput">
+                Besuchte Veranstaltungen (kommagetrennt):
+            </label>
+            <br>
+            <input id="veranstaltungenInput"
+                   type="text"
+                   name="veranstaltungenInput"
+                   th:value="${dto != null
+                       ? dto.veranstaltungenInput() : ''}"
+                   placeholder="z.B. Analysis, LinAlg">
+        </fieldset>
+
+        <br>
+        <button type="submit">Matching starten</button>
+    </form>
+
+    <section th:if="${ergebnisse != null
+                      and not #lists.isEmpty(ergebnisse)}">
+        <h2>Ergebnisse</h2>
+        <ul>
+            <li th:each="e : ${ergebnisse}">
+                <div th:if="${e.istThema()}">
+                    <strong>Thema: </strong>
+                    <a th:href="@{'/thema/' + ${e.thema.id}}"
+                       th:text="${e.thema.titel}"></a>
+                    – Score: <span th:text="${e.score}"></span>
+                </div>
+                <div th:if="${e.istBetreuer()}">
+                    <strong>Betreuer: </strong>
+                    <a th:href="@{'/betreuer-profil/'
+                            + ${e.betreuer.githubId}}">
+                        <span th:text="${e.betreuer.name.vorname}">
+                        </span>
+                        <span th:text="${e.betreuer.name.nachname}">
+                        </span>
+                    </a>
+                    – Score: <span th:text="${e.score}"></span>
+                </div>
+            </li>
+        </ul>
+    </section>
+
+    <p th:if="${ergebnisse != null
+               and #lists.isEmpty(ergebnisse)}">
+        Keine passenden Ergebnisse gefunden.
+    </p>
+
+    <nav>
+        <a th:href="@{/alle-betreuer}">Alle Betreuer</a>
+        <a th:href="@{/alle-themen}">Alle Themen</a>
+        <a th:href="@{/}">Startseite</a>
+    </nav>
+</main>
+</body>
+</html>

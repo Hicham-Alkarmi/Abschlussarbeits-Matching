@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alle Betreuer</title>
+</head>
+<body>
+<main>
+    <h1>Alle Betreuer</h1>
+
+    <!-- Begrüßung fix: -->
+    <p th:if="${name}">
+        Hallo <span th:text="${name}"></span>
+    </p>
+
+    <p th:if="${fehler}" th:text="${fehler}" role="alert"></p>
+    <p th:if="${message}" th:text="${message}"></p>
+
+    <table th:if="${not #lists.isEmpty(betreuer)}">
+        <caption>Betreuer Übersicht</caption>
+        <thead>
+        <tr>
+            <th scope="col">Vorname</th>
+            <th scope="col">Nachname</th>
+            <th scope="col">Email</th>
+            <th scope="col">Raum</th>
+            <th scope="col">Aktion</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="b : ${betreuer}">
+            <td th:text="${b.name.vorname}"></td>
+            <td th:text="${b.name.nachname}"></td>
+            <td th:text="${b.kontaktinfo.email.email}"></td>
+            <td th:text="${b.kontaktinfo.raum.raumNr}"></td>
+            <td>
+                <form th:action="@{'/admin/betreuer-loeschen/'
+                        + ${b.githubId}}"
+                      method="post">
+                    <button type="submit">Löschen</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <nav>
+        <a th:href="@{/admin/betreuer-anlegen}">
+            Neuen Betreuer anlegen
+        </a>
+        <a th:href="@{/}">Startseite</a>
+    </nav>
+</main>
+</body>
+</html>

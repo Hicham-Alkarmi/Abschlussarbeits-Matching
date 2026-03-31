@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meine Themen</title>
+</head>
+<body>
+<main>
+    <h1>Meine Themen</h1>
+
+    <p th:if="${message}" th:text="${message}"></p>
+    <p th:if="${fehler}" th:text="${fehler}" role="alert"></p>
+
+    <table th:if="${not #lists.isEmpty(alleThemen)}">
+        <thead>
+        <tr>
+            <th scope="col">Titel</th>
+            <th scope="col">Beschreibung</th>
+            <th scope="col">Aktionen</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="t : ${alleThemen}">
+            <td th:text="${t.titel}"></td>
+            <td th:text="${t.beschreibung ?: 'Keine Beschreibung'}"></td>
+            <td>
+                <a th:href="@{'/betreuer/thema-bearbeiten/' + ${t.id}}">
+                    Bearbeiten
+                </a>
+                <form th:action="@{'/betreuer/thema-loeschen/' + ${t.id}}"
+                      method="post" style="display:inline">
+                    <button type="submit">Löschen</button>
+                </form>
+                <a th:href="@{'/betreuer/thema/' + ${t.id} + '/datei-hochladen'}">
+                    Datei hochladen
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <a th:href="@{/betreuer/thema-erstellen}">
+        <button>Neues Thema erstellen</button>
+    </a>
+    <a th:href="@{/betreuer/datei-hochladen}">
+        <button>Datei zu meinem Profil hochladen</button>
+    </a>
+    <a th:href="@{/}">Startseite</a>
+</main>
+</body>
+</html>

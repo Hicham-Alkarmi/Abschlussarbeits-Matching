@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thesis Platform</title>
+</head>
+<body>
+
+<main>
+    <h1>Willkommen auf der Thesis Platform</h1>
+
+    <!-- Nicht eingeloggt -->
+    <section sec:authorize="isAnonymous()">
+        <p>Bitte melde dich an um fortzufahren.</p>
+        <a href="/oauth2/authorization/github">Mit GitHub anmelden</a>
+    </section>
+
+    <!-- Admin -->
+    <section sec:authorize="hasRole('ADMIN')">
+        <h2>Admin Bereich</h2>
+        <ul>
+            <li><a th:href="@{/admin/alle-betreuer}">Betreuer verwalten</a></li>
+            <li><a th:href="@{/matching}">Matching starten</a></li>
+        </ul>
+    </section>
+
+    <!-- Betreuer -->
+    <section sec:authorize="hasRole('BETREUER')">
+        <h2>Betreuer Bereich</h2>
+        <ul>
+            <li><a th:href="@{/betreuer/edit-profile}">Mein Profil</a></li>
+            <li><a th:href="@{/betreuer/alle-themen}">Meine Themen</a></li>
+            <li><a th:href="@{/matching}">Matching starten</a></li>
+        </ul>
+    </section>
+
+    <!-- Studi -->
+    <section sec:authorize="hasRole('USER')">
+        <h2>Willkommen</h2>
+        <ul>
+            <li><a th:href="@{/matching}">Matching starten</a></li>
+        </ul>
+    </section>
+
+    <!-- Logout zu allen Sections hinzufügen: -->
+    <section sec:authorize="isAuthenticated()">
+        <form th:action="@{/logout}" method="post">
+            <button type="submit">Abmelden</button>
+        </form>
+    </section>
+
+    <section sec:authorize="isAuthenticated()">
+        <ul>
+            <li><a th:href="@{/alle-betreuer}">Alle Betreuer</a></li>
+            <li><a th:href="@{/alle-themen}">Alle Themen</a></li>
+            <li><a th:href="@{/matching}">Matching starten</a></li>
+        </ul>
+    </section>
+
+</main>
+
+</body>
+</html>

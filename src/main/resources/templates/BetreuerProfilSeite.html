@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Betreuer Profil</title>
+</head>
+<body>
+<main>
+    <h1>Betreuer Profil</h1>
+
+    <p th:if="${fehler}" th:text="${fehler}" role="alert"></p>
+
+    <article th:if="${betreuer != null}">
+
+        <h2>
+            <span th:text="${betreuer.name.vorname}"></span>
+            <span th:text="${betreuer.name.nachname}"></span>
+        </h2>
+
+        <section>
+            <h3>Kontakt</h3>
+            <p>Email:
+                <span th:text="${betreuer.kontaktinfo.email.email}">
+                </span>
+            </p>
+            <p>Raum:
+                <span th:text="${betreuer.kontaktinfo.raum.raumNr}">
+                </span>
+            </p>
+        </section>
+
+        <section>
+            <h3>Fachgebiete</h3>
+            <ul th:if="${not betreuer.fachgebiete.isEmpty()}">
+                <li th:each="f : ${betreuer.fachgebiete}"
+                    th:text="${f.fachgebiet}">
+                </li>
+            </ul>
+            <p th:if="${betreuer.fachgebiete.isEmpty()}">
+                Keine Fachgebiete angegeben.
+            </p>
+        </section>
+
+        <section>
+            <h3>Links</h3>
+            <ul th:if="${not betreuer.links.isEmpty()}">
+                <li th:each="l : ${betreuer.links}">
+                    <a th:href="${l.url}"
+                       th:text="${l.anzeigenderText}"
+                       target="_blank"
+                       rel="noopener noreferrer">
+                    </a>
+                </li>
+            </ul>
+            <p th:if="${betreuer.links.isEmpty()}">
+                Keine Links angegeben.
+            </p>
+        </section>
+
+        <section>
+            <h3>Dateien</h3>
+            <ul th:if="${not #lists.isEmpty(dateien)}">
+                <li th:each="d : ${dateien}">
+                    <a th:if="${#strings.endsWith(
+                                d.dateiSystemName, '.md')}"
+                       th:href="@{'/datei/anzeigen/'
+                               + ${d.dateiSystemName}}"
+                       th:text="${d.originalName}">
+                    </a>
+                    <a th:if="${not #strings.endsWith(
+                                d.dateiSystemName, '.md')}"
+                       th:href="@{'/datei/download/'
+                               + ${d.dateiSystemName}}"
+                       th:text="${d.originalName}">
+                    </a>
+                </li>
+            </ul>
+            <p th:if="${#lists.isEmpty(dateien)}">
+                Keine Dateien vorhanden.
+            </p>
+        </section>
+
+    </article>
+
+    <nav>
+        <a th:href="@{/matching}">Matching</a>
+        <a th:href="@{/alle-betreuer}">Alle Betreuer</a>
+        <a th:href="@{/}">Startseite</a>
+    </nav>
+</main>
+</body>
+</html>

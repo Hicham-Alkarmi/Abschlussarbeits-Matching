@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Thema erstellen</title>
+</head>
+<body>
+<main>
+    <h1>Neues Thema erstellen</h1>
+
+    <p th:if="${fehler}" th:text="${fehler}"></p>
+
+    <form th:action="@{/betreuer/thema-erstellen}"
+          method="post"
+          th:object="${themaDto}">
+
+        <input type="hidden" th:field="*{betreuerId}">
+
+        <label>Titel *</label>
+        <input type="text" th:field="*{titel}">
+        <br>
+
+        <label>Beschreibung</label>
+        <textarea th:field="*{beschreibung}"></textarea>
+        <br>
+
+        <label>Fachgebiete (kommagetrennt: informatik, mathe)</label>
+        <input type="text" th:field="*{fachgebiete}">
+        <br>
+
+        <label>Veranstaltungen (kommagetrennt: AD, RDB)</label>
+        <input type="text" th:field="*{empfohleneVeranstaltungen}">
+        <br>
+
+        <label>Link URLs (kommagetrennt: https://github.com, https://hhu.de)</label>
+        <input type="text" th:field="*{linkUri}">
+        <br>
+
+        <label>Link Texte (kommagetrennt: GitHub, HHU Seite)</label>
+        <input type="text" th:field="*{linkText}">
+        <br>
+
+        <button type="submit">Erstellen</button>
+    </form>
+
+    <a th:href="@{/betreuer/alle-themen}">Zurück</a>
+</main>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Datei Ansicht</title>
+</head>
+<body>
+<main>
+    <h1>Datei Ansicht</h1>
+
+    <p th:if="${fehler}" th:text="${fehler}" role="alert"></p>
+
+    <!-- Markdown als HTML anzeigen: -->
+    <article th:if="${inhalt}"
+             th:utext="${inhalt}">
+    </article>
+
+    <nav>
+        <a th:href="@{/}">Startseite</a>
+    </nav>
+</main>
+</body>
+</html>
